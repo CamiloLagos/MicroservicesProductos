@@ -4,6 +4,7 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'cd producto-service'
+                sh 'pwd'
                 sh 'chmod +x gradlew && ./gradlew build'
                 sh "docker build -t service-config:0.0.${BUILD_NUMBER} ."
                 sh 'docker images'
