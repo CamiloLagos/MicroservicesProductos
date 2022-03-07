@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                git branch: 'main', url: 'https://github.com/CamiloLagos/Service-Config.git'
+                git branch: 'main', url: 'https://github.com/CamiloLagos/MicroservicesProductos.git'
                 sh 'cd /producto-service'
                 sh 'chmod +x gradlew && ./gradlew build'
                 sh "docker build -t service-config:0.0.${BUILD_NUMBER} ."
