@@ -13,6 +13,11 @@ public class ControladorProducto {
     @Autowired
     private ManejadorProducto manejadorProducto;
 
+    @GetMapping(value = "/info")
+    public ResponseEntity<String> info(){
+        return ResponseEntity.ok("Aplication is up!");
+    }
+
     @PostMapping
     public ResponseEntity<String> crearProducto(@RequestBody ProductoModelo productoModelo){
          manejadorProducto.crearProducto(productoModelo);
