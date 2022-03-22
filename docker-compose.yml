@@ -1,0 +1,9 @@
+version: '3.9'
+
+services:
+  product-serv:
+    container_name: producto-service
+    build: .
+    restart: on-failure
+    ports:
+      - 8090:8090
