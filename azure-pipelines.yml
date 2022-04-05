@@ -27,12 +27,8 @@ stages:
     - task: Docker@2
       displayName: Build and Push
       inputs:
-        command: build
-        dockerfile: '$(Build.SourcesDirectory)/producto-service/Dockerfile'
-        tags: |
-          $(tag)
-    - task: Docker@2
-      inputs:
+        containerRegistry: 'MyConnect'
         repository: 'camilolagos/producto-service'
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
+        tags: '$(tag)'
