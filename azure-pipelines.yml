@@ -1,0 +1,33 @@
+# Docker
+# Build a Docker image
+# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+
+trigger:
+- main
+
+resources:
+- repo: self
+
+variables:
+  tag: '0.0.$(Build.BuildId)'
+
+stages: 
+- stage: Build
+  displayName: Build image
+  jobs:
+  - job: Build
+    displayName: Build
+    pool: Default
+    steps:
+    - task: Gradle@2
+      displayName: 'gradlew build'
+      inputs:
+        gradleWrapperFile: '$(Parameters.wrapperScript)'
+        tasks: '$(Parameters.tasks)'
+    - task: Docker@2
+      displayName: Build and Push
+      inputs:
+        command: build
+        dockerfile: '$(Build.SourcesDirectory)/producto-service/Dockerfile'
+        tags: |
+          $(tag)
