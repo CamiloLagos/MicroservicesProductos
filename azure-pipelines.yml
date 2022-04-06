@@ -24,7 +24,7 @@ stages:
     steps:
     - task: replacetokens@5
       inputs:
-        rootDirectory: '$(Build.sourcesdirectory)/producto-service/src/main/resources/'
+        rootDirectory: '$(Build.sourcesdirectory)'
         targetFiles: '**/*.properties'
         encoding: 'auto'
         tokenPattern: 'rm'
@@ -36,12 +36,11 @@ stages:
         enableRecursion: false
         useLegacyPattern: false
         enableTelemetry: true
-    - task: Gradle@2
-      displayName: 'gradlew build'
-      inputs:
-        gradleWrapperFile: '$(Parameters.wrapperScript)'
-        tasks: '$(Parameters.tasks)'
-        workingDirectory: '$(Build.sourcesdirectory)/producto-service'
+        
+    - bash: |
+        ./gradlew bootJar
+      displayName: Build
+
     - task: Docker@2
       displayName: Build and Push
       inputs:
