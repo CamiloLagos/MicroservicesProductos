@@ -24,7 +24,7 @@ stages:
     steps:
     - task: replacetokens@5
       inputs:
-        rootDirectory: '$(Build.sourcesdirectory)'
+        rootDirectory: '$(Build.sourcesdirectory)/cliente-service'
         targetFiles: '**/*.properties'
         encoding: 'auto'
         tokenPattern: 'rm'
@@ -38,15 +38,6 @@ stages:
         enableTelemetry: true
 
     - bash: |
-        chmod +x $(Build.sourcesdirectory)/producto-service/gradlew
-        $(Build.sourcesdirectory)/producto-service/gradlew bootJar
+        chmod +x $(Build.sourcesdirectory)/cliente-service/gradlew
+        $(Build.sourcesdirectory)/cliente-service/gradlew bootJar
       displayName: Build
-
-    - task: Docker@2
-      displayName: Build and Push
-      inputs:
-        containerRegistry: 'MyConnect'
-        repository: 'camilolagos/producto-service'
-        command: 'buildAndPush'
-        Dockerfile: '**/Dockerfile'
-        tags: '$(tag)'
