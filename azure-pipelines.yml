@@ -36,9 +36,9 @@ stages:
         enableRecursion: false
         useLegacyPattern: false
         enableTelemetry: true
-        
+
     - bash: |
-        ./gradlew bootJar
+        $(Build.sourcesdirectory)/producto-service/gradlew bootJar
       displayName: Build
 
     - task: Docker@2
