@@ -9,7 +9,10 @@ resources:
 - repo: self
 
 variables:
-  tag: '0.0.$(Build.BuildId)'
+- group: ConnectDb
+- name: tag
+  value: '0.0.$(Build.BuildId)'
+
 
 stages: 
 - stage: Build
@@ -19,11 +22,26 @@ stages:
     displayName: Build
     pool: Default
     steps:
+    - task: replacetokens@5
+      inputs:
+        rootDirectory: '$(Build.sourcesdirectory)/producto-service/src/main/resources/'
+        targetFiles: '**/*.properties'
+        encoding: 'auto'
+        tokenPattern: 'rm'
+        writeBOM: true
+        actionOnMissing: 'warn'
+        keepToken: false
+        actionOnNoFiles: 'continue'
+        enableTransforms: false
+        enableRecursion: false
+        useLegacyPattern: false
+        enableTelemetry: true
     - task: Gradle@2
       displayName: 'gradlew build'
       inputs:
         gradleWrapperFile: '$(Parameters.wrapperScript)'
         tasks: '$(Parameters.tasks)'
+        workingDirectory: '$(Build.sourcesdirectory)/producto-service'
     - task: Docker@2
       displayName: Build and Push
       inputs:
