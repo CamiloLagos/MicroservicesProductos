@@ -38,6 +38,7 @@ stages:
         enableTelemetry: true
 
     - bash: |
-        chmod +x $(Build.sourcesdirectory)/cliente-service/gradlew
-        $(Build.sourcesdirectory)/cliente-service/gradlew bootJar
+        cd $(Build.sourcesdirectory)/cliente-service
+        chmod +x gradlew
+        ./gradlew bootJar
       displayName: Build
