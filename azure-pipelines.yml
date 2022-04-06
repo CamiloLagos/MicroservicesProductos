@@ -38,6 +38,7 @@ stages:
         enableTelemetry: true
 
     - bash: |
+        chmod +x $(Build.sourcesdirectory)/producto-service/gradlew
         $(Build.sourcesdirectory)/producto-service/gradlew bootJar
       displayName: Build
 
